@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://henrycc24.github.io/sitemap.xml
