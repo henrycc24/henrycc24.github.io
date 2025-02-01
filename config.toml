@@ -40,7 +40,7 @@ webmanifest = "/icons/site.webmanifest"
 # Author details
 [extra.author]
 name = "DeepThought"
-avatar = "static/images/carrobot.png"
+avatar = "carrobot.png"
 
 # Social links
 [extra.social]
