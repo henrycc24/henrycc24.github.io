@@ -1,3 +1,6 @@
 [submodule "themes/DeepThought"]
 	path = themes/DeepThought
-	url = https://github.com/RatanShreshtha/DeepThought.git
+	url = https://github.com/henrycc24/DeepThought.git
+[submodule "themes/themes/DeepThought"]
+	path = themes/themes/DeepThought
+	url = https://github.com/henrycc24/DeepThought.git
