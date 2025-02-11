@@ -151,11 +151,11 @@
   <span class="icon">
     <i class="far fa-clock"></i>
   </span>
-  <span>5 min,</span>
+  <span>8 min,</span>
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>926 words</span>
+  <span>1598 words</span>
 </span>
 
             </div>
@@ -174,7 +174,6 @@
 <h1 id="lab-2">Lab 2</h1>
 <p>The first lab we look into the examples given in the Ardruino library to test out our Artemis capabilities.</p>
 <h2 id="1-setting-up-the-imu"><strong>1. Setting Up the IMU</strong></h2>
-<p><a href="https://youtu.be/SVlN_UHRQ4E"><img src="https://markdown-videos-api.jorgenkh.no/youtube/SVlN_UHRQ4E" alt="" /></a></p>
 <p>Before we start up the lab we had to connect our IMU to the Artemis board using QWIIC connectors, and connecting it at the I2C port.
 Then we had to install the SparkFun Ardruino library in order to use the senesors provided. However, example_basics didn't work for me so instead I used the example code provided from lecture 4. the AD0_VAL I left it as 1, for when I changed it to 0 my program continously crashed. AD0_VAL is what allows us to connect 2 IMUs at the same time to the board.
 <img src="https://henrycc24.github.io/Labs/lab2/Connection.png" alt="alt text" /></p>
@@ -183,6 +182,7 @@ Then we had to install the SparkFun Ardruino library in order to use the senesor
 <img src="https://henrycc24.github.io/Labs/lab2/AccLec4.png" alt="alt text" /></p>
 <p>In the accelerometer data there is a lot of noise when you lay it still, let alone move it around which gives inaccurate measurements. While the Gyro doesn't have as much noise since it dependent on the change of angle.</p>
 <p>To make sure our IMU is working, after it is setup I implemented it such that it will blink an LED three times as shown below.</p>
+<p><a href="https://youtu.be/FeWk2GNqrH0"><img src="https://markdown-videos-api.jorgenkh.no/youtube/FeWk2GNqrH0" alt="" /></a></p>
 <h2 id="2-accelerometer"><strong>2. Accelerometer</strong></h2>
 <h3 id="1-pitch-and-roll">1. Pitch and Roll</h3>
 <pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>    </span><span style="color:#b48ead;">float</span><span> Acc_pitch;
@@ -191,8 +191,7 @@ Then we had to install the SparkFun Ardruino library in order to use the senesor
 </span><span>    Acc_roll  = </span><span style="color:#96b5b4;">atan2</span><span>(myICM.</span><span style="color:#bf616a;">accY</span><span>(),myICM.</span><span style="color:#bf616a;">accZ</span><span>())*</span><span style="color:#d08770;">180</span><span>/M_PI; 
 </span></code></pre>
 <p>To calculate pitch and roll I used these equations sourced from the lecture. Yaw can't be measured since it's on the same axis of gravity (z-axis), which is why we can only get pirch and roll from the accelerometer. The Accelerometer is fairly accurate when trying to position it and right angles such as {-90, 0, 90} as shown below.</p>
-<p>// NOT UPDATED YET //!!!!
-<img src="https://henrycc24.github.io/Labs/lab2/Three_CMD.png" alt="alt text" /></p>
+<p><a href="https://youtu.be/7dr8tfD84Kc"><img src="https://markdown-videos-api.jorgenkh.no/youtube/7dr8tfD84Kc" alt="" /></a></p>
 <p>The main issue with it is that the values flucuate a lot in small increments (noise), even when it held as still as possible or left to sit on a table.</p>
 <h3 id="2-accelerometer-noise-and-fft">2. Accelerometer Noise and FFT</h3>
 <pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>{
@@ -241,12 +240,67 @@ Then we had to install the SparkFun Ardruino library in order to use the senesor
 <p>As can be seen, the low-pass filter reduced a lot of noise! Meaning that the our data is even more accurate then it was earlier with the alpha value of .08, which will even come more into play when we do sensor fusion.</p>
 <h2 id="3-gyroscope"><strong>3. Gyroscope</strong></h2>
 <h3 id="1-pitch-roll-and-yaw"><strong>1. Pitch, Roll and Yaw</strong></h3>
-<p>We then setup a notifcation handler, where it will receive the stringss from the Artemis board sends, and then configure it to split the data so we can use it. This is down by using .split, and then later we append them to lists.</p>
-<p><img src="https://henrycc24.github.io/Labs/lab2/Noti.png" alt="alt text" /></p>
-<p>Here it is being used to print out time in ms automatically for us.</p>
-<p><img src="https://henrycc24.github.io/Labs/lab2/Noti_hand.png" alt="alt text" /></p>
-<h2 id="discussion"><strong>Discussion</strong></h2>
-<p>In this lab I wanted to experiment with typedef struct, which can be seen above when I was gather Temp and Time. I thought that maybe, this would save me some time and be easier, however, I was completely wrong. It felt way more complicated using my own type, instead of simply using creating another array, which trust me I learned for future labs. I also tinkered with how much bytes a message could send and if that would affect its msg rate. I went up to 15 bytes of data per msg and didn't see to much of a change from the orignal, however,i didn't limit test it as I would've liked to. Which makes me wonder what is the max for it, which I feel like I'll find out bby mistake.</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>{
+</span><span>    </span><span style="color:#b48ead;">case</span><span> GYRO_DATA: {
+</span><span>        </span><span style="color:#b48ead;">int</span><span> i = </span><span style="color:#d08770;">1</span><span>;
+</span><span>        </span><span style="color:#b48ead;">float</span><span> dt;
+</span><span>        </span><span style="color:#b48ead;">unsigned long</span><span> last_time = </span><span style="color:#bf616a;">millis</span><span>(); 
+</span><span>        time_array[</span><span style="color:#d08770;">0</span><span>] = last_time;
+</span><span>        </span><span style="color:#bf616a;">delay</span><span>(</span><span style="color:#d08770;">100</span><span>);
+</span><span>        </span><span style="color:#b48ead;">for </span><span>(i; i &lt; data_array_size; i++){
+</span><span>            </span><span style="color:#b48ead;">if</span><span>(myICM.</span><span style="color:#bf616a;">dataReady</span><span>()){
+</span><span>                myICM.</span><span style="color:#bf616a;">getAGMT</span><span>();
+</span><span>                dt = ((</span><span style="color:#bf616a;">millis</span><span>() - last_time)/</span><span style="color:#d08770;">1000.0</span><span>);
+</span><span>                last_time = </span><span style="color:#bf616a;">millis</span><span>();
+</span><span>                time_array[i]= (</span><span style="color:#b48ead;">int</span><span>) </span><span style="color:#bf616a;">millis</span><span>();
+</span><span>                Gyro_roll[i] = Gyro_roll[i-</span><span style="color:#d08770;">1</span><span>] + (myICM.</span><span style="color:#bf616a;">gyrX</span><span>()*dt);
+</span><span>                Gyro_pitch[i] = Gyro_pitch[i-</span><span style="color:#d08770;">1</span><span>] + (myICM.</span><span style="color:#bf616a;">gyrY</span><span>()*dt);
+</span><span>                Gyro_yaw[i] = Gyro_yaw[i-</span><span style="color:#d08770;">1</span><span>] + (myICM.</span><span style="color:#bf616a;">gyrZ</span><span>()*dt);
+</span><span>                </span><span style="color:#bf616a;">delay</span><span>(</span><span style="color:#d08770;">1</span><span>);
+</span><span>              }
+</span><span>        }
+</span><span>        Serial.</span><span style="color:#bf616a;">println</span><span>(&quot;</span><span style="color:#a3be8c;">sent the gyros</span><span>&quot;);
+</span><span>        </span><span style="color:#b48ead;">break</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>The pitch, roll, and yaw from the gyroscope unlike the accelerometer measure the change in angle/time. To calculate the gyroscope we use a whole different set of equations, where we must include the change in time (dt) which is shown above in my code. Furthermore, the angle of the gryoscrope is dependent on the previous result which showcases a lot of drift. When it laying on a table, there is no change in angle, but since it adding onto itself the roll and pitch as seen by the graphs continously increase over time. On the other hand the accelerometer doesn't have drift, but has a lot of noise which the gyroscope doesn't have.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/RoPiYa.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab2/Sample_rate.png" alt="alt text" /></p>
+<p>Here are two images with different sample frequencies. The one of the left is with a smaller sample frequency, while the right has a larger implemented with delays. The larger the sample rate the more drift it will have, which makes sense since dt will be larger when calculating for the roll and pitch. Meaning that you want to have the smallest possible sample rate when calculating gyroscope.</p>
+<h3 id="1-complementary-filter"><strong>1. Complementary Filter</strong></h3>
+<p>With the gyroscope and accelerometer we can perform sensor fusion in which we will create a complementary filter. Using the advantages of both sensors, we end up with almost no noise or drift for our calculated roll and pitch.</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>{
+</span><span>        </span><span style="color:#b48ead;">case</span><span> COMP_FILTER: {
+</span><span>          </span><span style="color:#b48ead;">int</span><span> i = </span><span style="color:#d08770;">1</span><span>;
+</span><span>            </span><span style="color:#b48ead;">for </span><span>(i; i &lt; data_array_size; i++){
+</span><span>                </span><span style="color:#b48ead;">if</span><span>(myICM.</span><span style="color:#bf616a;">dataReady</span><span>()){
+</span><span>                myICM.</span><span style="color:#bf616a;">getAGMT</span><span>();
+</span><span>                time_array[i] = </span><span style="color:#bf616a;">millis</span><span>();
+</span><span>                Acc_pitch = alpha_lpf * (</span><span style="color:#96b5b4;">atan2</span><span>(myICM.</span><span style="color:#bf616a;">accX</span><span>(),myICM.</span><span style="color:#bf616a;">accZ</span><span>())*</span><span style="color:#d08770;">180</span><span>/M_PI) + (</span><span style="color:#d08770;">1</span><span>-alpha_lpf) * Acc_pitch;
+</span><span>                Acc_roll = alpha_lpf * (</span><span style="color:#96b5b4;">atan2</span><span>(myICM.</span><span style="color:#bf616a;">accY</span><span>(), myICM.</span><span style="color:#bf616a;">accZ</span><span>())*</span><span style="color:#d08770;">180</span><span>/M_PI) + (</span><span style="color:#d08770;">1</span><span>-alpha_lpf) * Acc_roll;
+</span><span>                dt = (time_array[i] - time_array[i-</span><span style="color:#d08770;">1</span><span>])/</span><span style="color:#d08770;">1000.0</span><span>;
+</span><span>
+</span><span>                Comp_pitch[i] = (Comp_pitch[i-</span><span style="color:#d08770;">1</span><span>] + myICM.</span><span style="color:#bf616a;">gyrY</span><span>()*dt)*(</span><span style="color:#d08770;">1</span><span>-alpha_comp) + (Acc_pitch)* alpha_comp;
+</span><span>                Comp_roll[i] = (Comp_roll[i-</span><span style="color:#d08770;">1</span><span>] + myICM.</span><span style="color:#bf616a;">gyrX</span><span>()*dt)*(</span><span style="color:#d08770;">1</span><span>-alpha_comp) + (Acc_roll)* alpha_comp;
+</span><span>              }
+</span><span>          }
+</span><span>            </span><span style="color:#b48ead;">break</span><span>;
+</span><span>        }
+</span><span>}
+</span></code></pre>
+<p>Here is most of the code used for create the filter, and key to note is that we also use an alpha value, but this alpha is different from our low pass filter one. In this case we need to adjust our alpha to when we start seeing the low-pass filter peak, which is at around 10 Hz as calculated using the FFT graph. Seeing that around that hertz is where it stabilizes, I was able to calculate with the same formula as before the alpha to be .3 which is what I used and it worked really well as shown below.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/Comp_roll.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab2/Comp_zoom.png" alt="alt text" />
+<img src="https://henrycc24.github.io/Labs/lab2/Gyro_comp.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab2/LPF_comp.png" alt="alt text" /></p>
+<p>These graphs are displaying data of me while I was moving and rotating the imu around which is why the normall roll and pitch go hectic. However, as you can see with the zoom in graph (top right), the complementary filter did its job. It was the smoothest graph out of all three options, even though the low pass filter was very similar. However, we can also see that there is a lot of noise if you don't use a lpf. It makes sense though why the complementary filter didn't get too affected cause we push a low-pass filter on a low-pass filter, that is passed on a built in one on a chip. There only room for so much optimization.</p>
+<h2 id="2-sample-data"><strong>2. Sample Data</strong></h2>
+<p>Now its time for optimzation within our code in order to get the fastest sample rate and message sent across. To do this I removed a lot of useless code and print statements that took up time. Furthermore, I removed a lot of the delays and made it such that all the values of accelerometer roll and pitch, gyroscope roll, pitch and yaw, and complementary roll and pitch can be calculated in one command. Meaning that I don't have to call multiple commands since all the calcualtions including the low pass filter of the accelertometer are performed. I also ran some tests to see what would be faster, sending the data live while computing or just computing the array then sending that. To my suprise there was a significant difference between live sending, and sending the data after its collected! If you send it live to gather 1000 samples it took 30 second meaning our sample frequency was very large! This resulted in a cascading affect where of gryoscope was less accurate, which also meant the complementary too. On the otherhand when I first got the 1000 samples then sent it, it was blazing quick at only around 3 seconds to gather all the data! 10x faster then before which also meant our dt was smaller giving us vetter gyroscope data. It still however, took a long time to send but I would rather have that occur then when it's collecting data.</p>
+<p>Knowing this information in order to gather 6 secons I simply just collected 2000 samples as shown below. 2000 samples collected is around 6.3 seconds, but it still took a minute to send it all. I also printed some of the pitch values of all the sensors to showcase it gathering the data.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/5_seconds.png" alt="alt text" /></p>
+<p><a href="https://youtu.be/3K57tmdrMm0"><img src="https://markdown-videos-api.jorgenkh.no/youtube/3K57tmdrMm0" alt="" /></a></p>
+<p>With this speed of 6.3 seconds to collect 2000 samples, that about 300 samples per second. With the memory size of the Artemis being 384KB, lets just assume you're gathering every data you can from the sensors (10 floats * 4 bytes) meaning that you can collect 9600 sets of data points. Which then at 300 samples per second will end up with it being filled with data in 32 seconds!</p>
+<h2 id="car-stunt"><strong>Car Stunt</strong></h2>
+<p>Now here me playing around with our RC Car!</p>
+<p><a href="https://youtu.be/vM4l_CRC5J4"><img src="https://markdown-videos-api.jorgenkh.no/youtube/vM4l_CRC5J4" alt="" /></a></p>
 
           </div>
         </article>
