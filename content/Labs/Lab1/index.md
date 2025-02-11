@@ -73,9 +73,8 @@ Here we test our temperature sensor, by placing our finger on top of it and seei
 
 Lastly, we test to see if our microphone is working by checking if there is a change in frequency due to sound. As seen in the video I attempted to whistle, and there was some change, so I'll take it. 
 
+
 # Lab 1B 
-
-
 
 ## **1. ECHO**
 
