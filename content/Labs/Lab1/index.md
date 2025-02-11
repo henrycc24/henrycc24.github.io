@@ -150,7 +150,7 @@ After creating our array, we use the same method as time, we just append our tem
 
 This is what it looks like from our side when we call the command!
 
-## **8. Pros/Cons **
+## **8. Pros/Cons**
 
 The two methods we explore is sending data while collecting it (live), and gathering the data into a array, and then sending the array. When it comes to having a large amount of data that you want to send it is best to gather it an array since you will collect way more data in a given time. Experimenting with sending data and then sending, if you do it in a for loop it will take signficianlty longer. The for loop has to iterate through to gather each data, and then send the data in char arrarys to the computer which take ages. However, if you just append all the data into an array and have a seperate command to send it then you won't face that time hold up! Meaning if you want more data per second, and you want to gather a lot then use an array first then send it. However, if you're only looking at a few values then doing it live won't cause to much time delay. It better to do live sending when first implementing functions/sensors to make sure they're operating properly. However, once you know they are set up correct, then I would switch out the send statements so you can gather more data. 
 
