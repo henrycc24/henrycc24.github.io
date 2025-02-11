@@ -39,7 +39,7 @@
 
   <title>
     
- | Lab2
+ | Lab 2
 
   </title>
 
@@ -127,9 +127,9 @@
       <div class="column is-8 is-offset-2">
         <article class="box">
           <h1 class="title">
-            Lab2
+            Lab 2
           </h1>
-          <p class="subtitle">Second Lab</p>
+          <p class="subtitle">IMU</p>
           <div class="columns is-multiline is-gapless">
             <div class="column is-8">
               
@@ -151,11 +151,11 @@
   <span class="icon">
     <i class="far fa-clock"></i>
   </span>
-  <span>0 min,</span>
+  <span>5 min,</span>
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>0 words</span>
+  <span>926 words</span>
 </span>
 
             </div>
@@ -167,7 +167,87 @@
             </div>
           </div>
           <div class="content mt-2">
-            
+            <blockquote>
+<p>Lab2: Here we are working with the IMU so we can add it to our robot. Experimenting gathering data with the accelerometer and gyroscope, plus making a stunt with our RC robot.</p>
+</blockquote>
+<h1 id="tasks">Tasks</h1>
+<h1 id="lab-2">Lab 2</h1>
+<p>The first lab we look into the examples given in the Ardruino library to test out our Artemis capabilities.</p>
+<h2 id="1-setting-up-the-imu"><strong>1. Setting Up the IMU</strong></h2>
+<p><a href="https://youtu.be/SVlN_UHRQ4E"><img src="https://markdown-videos-api.jorgenkh.no/youtube/SVlN_UHRQ4E" alt="" /></a></p>
+<p>Before we start up the lab we had to connect our IMU to the Artemis board using QWIIC connectors, and connecting it at the I2C port.
+Then we had to install the SparkFun Ardruino library in order to use the senesors provided. However, example_basics didn't work for me so instead I used the example code provided from lecture 4. the AD0_VAL I left it as 1, for when I changed it to 0 my program continously crashed. AD0_VAL is what allows us to connect 2 IMUs at the same time to the board.
+<img src="https://henrycc24.github.io/Labs/lab2/Connection.png" alt="alt text" /></p>
+<p>To test out the gyroscope and accelerometer I used the serial plotter and ran the lecture 4 code as shown below.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/GyroLec4.png" alt="alt text" />
+<img src="https://henrycc24.github.io/Labs/lab2/AccLec4.png" alt="alt text" /></p>
+<p>In the accelerometer data there is a lot of noise when you lay it still, let alone move it around which gives inaccurate measurements. While the Gyro doesn't have as much noise since it dependent on the change of angle.</p>
+<p>To make sure our IMU is working, after it is setup I implemented it such that it will blink an LED three times as shown below.</p>
+<h2 id="2-accelerometer"><strong>2. Accelerometer</strong></h2>
+<h3 id="1-pitch-and-roll">1. Pitch and Roll</h3>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>    </span><span style="color:#b48ead;">float</span><span> Acc_pitch;
+</span><span>    </span><span style="color:#b48ead;">float</span><span> Acc_roll; 
+</span><span>    Acc_pitch = </span><span style="color:#96b5b4;">atan2</span><span>(myICM.</span><span style="color:#bf616a;">accX</span><span>(),myICM.</span><span style="color:#bf616a;">accZ</span><span>())*</span><span style="color:#d08770;">180</span><span>/M_PI; 
+</span><span>    Acc_roll  = </span><span style="color:#96b5b4;">atan2</span><span>(myICM.</span><span style="color:#bf616a;">accY</span><span>(),myICM.</span><span style="color:#bf616a;">accZ</span><span>())*</span><span style="color:#d08770;">180</span><span>/M_PI; 
+</span></code></pre>
+<p>To calculate pitch and roll I used these equations sourced from the lecture. Yaw can't be measured since it's on the same axis of gravity (z-axis), which is why we can only get pirch and roll from the accelerometer. The Accelerometer is fairly accurate when trying to position it and right angles such as {-90, 0, 90} as shown below.</p>
+<p>// NOT UPDATED YET //!!!!
+<img src="https://henrycc24.github.io/Labs/lab2/Three_CMD.png" alt="alt text" /></p>
+<p>The main issue with it is that the values flucuate a lot in small increments (noise), even when it held as still as possible or left to sit on a table.</p>
+<h3 id="2-accelerometer-noise-and-fft">2. Accelerometer Noise and FFT</h3>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>{
+</span><span>    </span><span style="color:#b48ead;">case</span><span> Get_Pitch_Roll: {
+</span><span>        </span><span style="color:#b48ead;">int</span><span> i = </span><span style="color:#d08770;">0</span><span>;
+</span><span>        </span><span style="color:#b48ead;">for </span><span>(i; i &lt; data_array_size; i++){
+</span><span>            </span><span style="color:#b48ead;">if</span><span>(myICM.</span><span style="color:#bf616a;">dataReady</span><span>()){
+</span><span>                myICM.</span><span style="color:#bf616a;">getAGMT</span><span>();
+</span><span>                RoPi_array[i].</span><span style="color:#bf616a;">time </span><span>= (</span><span style="color:#b48ead;">int</span><span>) </span><span style="color:#bf616a;">millis</span><span>();
+</span><span>                RoPi_array[i].</span><span style="color:#bf616a;">pitch </span><span>= (</span><span style="color:#b48ead;">float</span><span>) (</span><span style="color:#96b5b4;">atan2</span><span>(myICM.</span><span style="color:#bf616a;">accX</span><span>(),myICM.</span><span style="color:#bf616a;">accZ</span><span>())*</span><span style="color:#d08770;">180</span><span>/M_PI);
+</span><span>                 RoPi_array[i].</span><span style="color:#bf616a;">roll </span><span>= (</span><span style="color:#b48ead;">float</span><span>) (</span><span style="color:#96b5b4;">atan2</span><span>(myICM.</span><span style="color:#bf616a;">accY</span><span>(),myICM.</span><span style="color:#bf616a;">accZ</span><span>())*</span><span style="color:#d08770;">180</span><span>/M_PI);
+</span><span>                </span><span style="color:#bf616a;">delay</span><span>(</span><span style="color:#d08770;">5</span><span>);
+</span><span>              }
+</span><span>            }
+</span><span>          Serial.</span><span style="color:#bf616a;">print</span><span>(i);
+</span><span>          Serial.</span><span style="color:#bf616a;">println</span><span>(&quot;</span><span style="color:#a3be8c;"> pitches/rolls saved</span><span>&quot;);
+</span><span>          </span><span style="color:#b48ead;">break</span><span>; 
+</span><span>        }
+</span><span>}
+</span></code></pre>
+<p>Similar to lab1, to gather accelerometer data we just created a loop that itereated through our data_array_size that in this is also 1000 samples. Using the same equations as before to calculate the roll and pitch. Here are the graphs of the all the data gathered for roll and pitch.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/Pitch_acc.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab2/Roll_acc.png" alt="alt text" />
+<img src="https://henrycc24.github.io/Labs/lab2/FFT_pitch.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab2/FFT_roll.png" alt="alt text" /></p>
+<p>This is the python used to graph it with numpy and plt packages. As well as that using the fft packages with numpy.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/RoPi_fft_graph.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab2/RoPi_graph.png" alt="alt text" /></p>
+<p>As you can see from the FFT there seems to be a very large peak at the beginning frequencies of the array. It seems to happen at abour &lt;2 Hz, which is what I will use at the cuttoff frequency. It being a low frequency is because the IMU already has a low pass fitler for the accelrometer and gryoscope. However, knowing what our cutoff frequency is then we can calcuate our alpha calue that we can use for a low pass filter to filter out even more noise. The cutoff frequency is important to select to block off any random or high noise, to make are data more stable. To calcualte the alpha we get RC = 1/(2 * pi * 2), then with that RC value we get alpha = dt/(dt+RC). Where dt is the average of change of time for the whole array of calcualted values for roll/pitch. We get an alpha value of .08, which we will use for our low pass filter.</p>
+<h3 id="3-low-pass-filter"><strong>3. Low-Pass Filter</strong></h3>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>{
+</span><span>    </span><span style="color:#b48ead;">case</span><span> LPF_Roll_Pitch: {
+</span><span>        </span><span style="color:#b48ead;">const float</span><span> alpha = </span><span style="color:#d08770;">0.08</span><span>;
+</span><span>        Roll_lpf[</span><span style="color:#d08770;">0</span><span>] = RoPi_array[</span><span style="color:#d08770;">1</span><span>].</span><span style="color:#bf616a;">roll</span><span>;
+</span><span>        Pitch_lpf[</span><span style="color:#d08770;">0</span><span>] = RoPi_array[</span><span style="color:#d08770;">1</span><span>].</span><span style="color:#bf616a;">pitch</span><span>;
+</span><span>        </span><span style="color:#b48ead;">for </span><span>(</span><span style="color:#b48ead;">int</span><span> i = </span><span style="color:#d08770;">1</span><span>; i &lt; (data_array_size); i++){
+</span><span>            Pitch_lpf[i] = alpha * RoPi_array[i].</span><span style="color:#bf616a;">pitch </span><span>+ (</span><span style="color:#d08770;">1</span><span>-alpha) * Pitch_lpf[i-</span><span style="color:#d08770;">1</span><span>];
+</span><span>            Pitch_lpf[i-</span><span style="color:#d08770;">1</span><span>] = Pitch_lpf[i];
+</span><span>            Roll_lpf[i] = alpha * RoPi_array[i].</span><span style="color:#bf616a;">roll </span><span>+ (</span><span style="color:#d08770;">1</span><span>-alpha) * Roll_lpf[i-</span><span style="color:#d08770;">1</span><span>];
+</span><span>            Roll_lpf[i-</span><span style="color:#d08770;">1</span><span>] = Roll_lpf[i];
+</span><span>        }
+</span><span>        Serial.</span><span style="color:#bf616a;">println</span><span>(&quot;</span><span style="color:#a3be8c;">lpf pitches/rolls saved</span><span>&quot;);
+</span><span>        </span><span style="color:#b48ead;">break</span><span>; 
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>In order to create a low pass filter we have to iterate thorugh our orignal roll and pitch data, and then adjust the values with alpha as shown above. After gathering the low-pass data, the graphs are shown below.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/roll_lpf.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab2/pitch_lpf.png" alt="alt text" /></p>
+<p>As can be seen, the low-pass filter reduced a lot of noise! Meaning that the our data is even more accurate then it was earlier with the alpha value of .08, which will even come more into play when we do sensor fusion.</p>
+<h2 id="3-gyroscope"><strong>3. Gyroscope</strong></h2>
+<h3 id="1-pitch-roll-and-yaw"><strong>1. Pitch, Roll and Yaw</strong></h3>
+<p>We then setup a notifcation handler, where it will receive the stringss from the Artemis board sends, and then configure it to split the data so we can use it. This is down by using .split, and then later we append them to lists.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/Noti.png" alt="alt text" /></p>
+<p>Here it is being used to print out time in ms automatically for us.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab2/Noti_hand.png" alt="alt text" /></p>
+<h2 id="discussion"><strong>Discussion</strong></h2>
+<p>In this lab I wanted to experiment with typedef struct, which can be seen above when I was gather Temp and Time. I thought that maybe, this would save me some time and be easier, however, I was completely wrong. It felt way more complicated using my own type, instead of simply using creating another array, which trust me I learned for future labs. I also tinkered with how much bytes a message could send and if that would affect its msg rate. I went up to 15 bytes of data per msg and didn't see to much of a change from the orignal, however,i didn't limit test it as I would've liked to. Which makes me wonder what is the max for it, which I feel like I'll find out bby mistake.</p>
+
           </div>
         </article>
       </div>
