@@ -151,11 +151,11 @@
   <span class="icon">
     <i class="far fa-clock"></i>
   </span>
-  <span>2 min,</span>
+  <span>4 min,</span>
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>378 words</span>
+  <span>643 words</span>
 </span>
 
             </div>
@@ -204,18 +204,30 @@
 <li>Main file we will be editing and connecting though our Artemis wth BLE</li>
 <li>Contains our UUIDS (University unique identifiers)</li>
 </ul>
-<p>Furthermore, we had to configure ble_arduino such that we print the MAC_ADDRESS and create a new UUID</p>
-<h2 id="the-process">The Process</h2>
-<p>We follow below simple steps to build websites and applications,</p>
-<ul>
-<li>You contact us with a requirement of static, dynamic website or web application.</li>
-<li>We analyze the requirements and come up with a proposal of estimate time and cost involved.</li>
-<li>We send you some example themes from which you can choose.</li>
-<li>After you complete advance payment, we start development.</li>
-<li>We will keep you updated with the progress in stages with demo of the website.</li>
-<li>After the final demo and your final payment, the website will be live.</li>
-</ul>
-<p><strong>Please note that you can contact us even if you are not sure whether a web application is suitable for your process or not.</strong></p>
+<p>Furthermore, we had to configure ble_arduino such that we print our unique MAC_ADDRESS and create a new UUID. This is to make sure that we only connect to our device and not the rest of the students in the lab. Changing this in our ble_arduino.ino and Juptyer Notebook, now allowed us to our tasks.</p>
+<h1 id="tasks">Tasks</h1>
+<p><strong>1. ECHO</strong></p>
+<p>The first command we implemented was ECHO. This just ment that we would send a string to our Artemis and it will reply with "Robot says -&gt; string sent".</p>
+<p><img src="https://henrycc24.github.io/Labs/lab1/ECHO_CMD.PNG" alt="alt text" />
+<img src="https://henrycc24.github.io/Labs/lab1/ECHO.png" alt="alt text" /></p>
+<p>The above image showcases how we clear our char array and then append "Robot says", with the next line adding our message then sending that whole char array back to us. With the other image showing what we receive.</p>
+<p><strong>2. SEND_THREE_FLOATS</strong></p>
+<p><img src="https://henrycc24.github.io/Labs/lab1/Three_CMD.png" alt="alt text" /></p>
+<p>Next we had to send three floats to the Artemis, and it had to extract each individual value. Knowing that | seperates values, we send three floats with | in between, and with the .get_next_value cmd we can seperate each one simply.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab1/Three_floats.png" alt="alt text" /></p>
+<p><strong>3. GET_TIME_MILLIS</strong></p>
+<p>Next, we implement a command to fetch time in ms. Like earlier we will simply use the function millis(), andn append it into a character array with T:.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab1/Get_time.png" alt="alt text" />
+<img src="https://henrycc24.github.io/Labs/lab1/Get_cmd.png" alt="alt text" /></p>
+<p><strong>4. Notifciation Handler</strong></p>
+<p>We then setup a notifcation handler, where it will receive the stringss from the Artemis board sends, and then configure it to split the data so we can use it. This is down by using .split, and then later we append them to lists.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab1/Noti.png" alt="alt text" /></p>
+<p>Here it is being used to print out time in ms automatically for us.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab1/Noti_hand.png" alt="alt text" /></p>
+<p><strong>5. Time Loop</strong></p>
+<p><img src="https://henrycc24.github.io/Labs/lab1/time_loop.png" alt="alt text" /></p>
+<p>Now we need to create a loop that sends out current time in ms. Using our functions from before, we simply create a while loop with us looping until we hit 10000. I used 10000 because, 10000/1000 = 10 seconds which is a very nice number to divide with. Incrementing int i to know how many messages are sent, at the end we were able to send 500 messages in 10 seconds. Which means ~ 50 msgs/s. The size of the char array I sent was 9, meaning 9 bytes per message so 450 bytes per message is the data transfer rate i got.</p>
+<p><strong>5. Time Loop</strong></p>
 
           </div>
         </article>
