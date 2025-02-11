@@ -39,7 +39,7 @@
 
   <title>
     
- | Labs
+ | Lab 1
 
   </title>
 
@@ -127,9 +127,9 @@
       <div class="column is-8 is-offset-2">
         <article class="box">
           <h1 class="title">
-            Labs
+            Lab 1
           </h1>
-          <p class="subtitle">First Lab</p>
+          <p class="subtitle">Connecting Bluetooth to the Nano</p>
           <div class="columns is-multiline is-gapless">
             <div class="column is-8">
               
@@ -151,11 +151,11 @@
   <span class="icon">
     <i class="far fa-clock"></i>
   </span>
-  <span>0 min,</span>
+  <span>2 min,</span>
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>0 words</span>
+  <span>378 words</span>
 </span>
 
             </div>
@@ -167,7 +167,56 @@
             </div>
           </div>
           <div class="content mt-2">
-            
+            <blockquote>
+<p>Lab1: The Artemis Board and BlueTooth</p>
+</blockquote>
+<h2 id="prelab">Prelab</h2>
+<p>Before starting the lab we had to setup our computers in order for us to work with the Adruino. Doing this requrired us downloading the <strong>Arduino IDE</strong>. Luckily for me even though I have a Mac, I haven't updated it in years, so I don't have to download any additional drivers. Getting that out of the way, next I had to setup my environemnt in Python in order to send and recieve messages from the ardruino, Having Pip and Python latest versions already installed all I had to do was download the virtual environment (activate it), downlaod the necessary python packages, the codebase, and Jupyter Notebook.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>source FastRobots_ble/</span><span style="color:#96b5b4;">bin</span><span>/activate
+</span><span>pip install numpy pyyaml colorama nest_asyncio leak jupyterlab
+</span></code></pre>
+<p>The codebase we are working in is ble_arduino where it has the files ble_arduino.ino, BLECstringCharacteristic.h, EString.h, RobotCommand.h which to sum up do:</p>
+<p><strong>RobotCommand.h</strong></p>
+<ul>
+<li>Used when Artemes recieves string format of</li>
+</ul>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&lt;cmd_type&gt;:&lt;value1&gt;|&lt;value2&gt;</span><span style="color:#d08770;">...
+</span></code></pre>
+<ul>
+<li>robot_cmd(:|) whrere ":l" is deilmiter</li>
+<li>&lt;cmd_type&gt; is an int and <value> can be either an int, float, string</li>
+<li>Main way we will by sending commands in jupyter notebook</li>
+</ul>
+<p><strong>EString.h.h</strong></p>
+<ul>
+<li>Used to manipulate char arrays</li>
+<li>provides getter and setter functions</li>
+<li>Clear(), append(), c_str(), are all used throuhgout to send charracter arrays.</li>
+<li>Used to transmit strings from the Artemis to the computer (main way we recieve data in lab)</li>
+</ul>
+<p><strong>BLECstringCharacteristic.h</strong></p>
+<ul>
+<li>Use to receive data from the artemis</li>
+<li>writeValue(value): the value is what we transmit to the computer</li>
+</ul>
+<p><strong>ble_arduino.ino</strong></p>
+<ul>
+<li>Main file we will be editing and connecting though our Artemis wth BLE</li>
+<li>Contains our UUIDS (University unique identifiers)</li>
+</ul>
+<p>Furthermore, we had to configure ble_arduino such that we print the MAC_ADDRESS and create a new UUID</p>
+<h2 id="the-process">The Process</h2>
+<p>We follow below simple steps to build websites and applications,</p>
+<ul>
+<li>You contact us with a requirement of static, dynamic website or web application.</li>
+<li>We analyze the requirements and come up with a proposal of estimate time and cost involved.</li>
+<li>We send you some example themes from which you can choose.</li>
+<li>After you complete advance payment, we start development.</li>
+<li>We will keep you updated with the progress in stages with demo of the website.</li>
+<li>After the final demo and your final payment, the website will be live.</li>
+</ul>
+<p><strong>Please note that you can contact us even if you are not sure whether a web application is suitable for your process or not.</strong></p>
+
           </div>
         </article>
       </div>
