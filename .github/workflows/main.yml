@@ -3,22 +3,24 @@ name: github pages
 on:
  push:
      branches:
-     - main
-
+         - main
+         
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+
         - uses: actions/checkout@v4
-        with:
+          with:
             submodules: true
+
         - name: Install and Run Zola
-            run: |
-              sudo snap install --edge zola
-               zola build
+          run: |
+            sudo snap install --edge zola
+            zola build
 
         - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-           github_token: ${{ secrets.TOKEN }}
-           publish_dir: ./public
+          uses: peaceiris/actions-gh-pages@v4
+          with:
+             github_token: ${{ secrets.TOKEN }}
+             publish_dir: ./public
