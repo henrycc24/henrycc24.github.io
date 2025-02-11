@@ -42,9 +42,7 @@ The codebase we are working in is ble_arduino where it has the files ble_arduino
 - Main file we will be editing and connecting though our Artemis wth BLE 
 - Contains our UUIDS (University unique identifiers) 
 
-Furthermore, we had to configure ble_arduino such that we create
-
-
+Furthermore, we had to configure ble_arduino such that we print the MAC_ADDRESS and create a new UUID
 
 ## The Process
 
