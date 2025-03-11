@@ -56,3 +56,4 @@ With these calcuations, we get a PWM signal produced with the kp and error. Depe
 
 Here is a video of it using the P algorithim to stop ~ a 1ft away from the wall. 
 
+[![](https://markdown-videos-api.jorgenkh.no/youtube/Y3MIlNEH4Cc)](https://youtu.be/Y3MIlNEH4Cc)
