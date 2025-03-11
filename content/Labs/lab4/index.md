@@ -74,6 +74,25 @@ Under load it took 60 PWM on both sides to get it moving. Wihtout load it took 4
 [![](https://markdown-videos-api.jorgenkh.no/youtube/yudRkV-ePfE)](https://youtu.be/yudRkV-ePfE)
 
 
+## **5. Calliibration Factor **
+
+Both motors sadly don't seem to spin at the same rate. However, they are close and to figure out which was stronger I set them equal and let it run. Whichever side turned the more I made weaker just by a little. My factor was 4/5 and can be seen below. After finding it I tested it by going forward then backwards 2m. It important to note that PWM by default is 8 bits (0-255) when configuring it, but it can be changed as shown in an example demo file. 
+
+
+![alt text](cali_fact.PNG)
+
+[![](https://markdown-videos-api.jorgenkh.no/youtube/5gWvonIzkD0)](https://youtu.be/5gWvonIzkD0)
+
+
+## **5. Open Loop **
+
+To put my car to the test I made it sping around my water bottle a couple of times: 
+
+[![](https://markdown-videos-api.jorgenkh.no/youtube/PihZ3a2_GjA)](https://youtu.be/PihZ3a2_GjA)
+
+Here the code I used: 
+
+![alt text](right_round.PNG)
 
 
 
