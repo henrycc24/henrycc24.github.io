@@ -39,7 +39,7 @@
 
   <title>
     
- | Lab3
+ | Lab 4
 
   </title>
 
@@ -127,9 +127,9 @@
       <div class="column is-8 is-offset-2">
         <article class="box">
           <h1 class="title">
-            Lab3
+            Lab 4
           </h1>
-          <p class="subtitle">Third Lab</p>
+          <p class="subtitle">Fourth Lab - Motor Control</p>
           <div class="columns is-multiline is-gapless">
             <div class="column is-8">
               
@@ -151,11 +151,11 @@
   <span class="icon">
     <i class="far fa-clock"></i>
   </span>
-  <span>0 min,</span>
+  <span>3 min,</span>
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>0 words</span>
+  <span>533 words</span>
 </span>
 
             </div>
@@ -167,7 +167,48 @@
             </div>
           </div>
           <div class="content mt-2">
-            
+            <blockquote>
+<p>Lab1: Motor and Open Loop Control</p>
+</blockquote>
+<h2 id="prelab">Prelab</h2>
+<p>Before starting the lab we must refreshen up on how to use the oscilloscope and check out the documenation/datasheet for the dual motor driver. While also carefully considering how we would like to arrange our sensors in our car. Note that we use seperate batteries for the motors/artemis since the motors consume more power then the artemis. As well as that the artemis won't be affected by any noise by the motors.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/Circuit_dia.PNG" alt="alt text" /></p>
+<h1 id="tasks">Tasks</h1>
+<h1 id="lab-4">Lab 4</h1>
+<h2 id="1-pwm-signals"><strong>1. PWM Signals</strong></h2>
+<p><a href="https://youtu.be/p49Bavg1Acw"><img src="https://markdown-videos-api.jorgenkh.no/youtube/p49Bavg1Acw" alt="" /></a></p>
+<p>After soldering the motor controllers, befeore I attach them to the motors I tested them out first using an oscilliscope and power supply. To mimic what we will be using as power, I set the power-supply to 3.7 volts. Hooking up the Vin and GND to the power supply, and then Bout1/Aout1 to GND and Bout2 and Aout2 to prope we get these images:</p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/Oscill.PNG" alt="alt text" />  <img src="https://henrycc24.github.io/Labs/lab4/Osee_dia.PNG" alt="alt text" /></p>
+<p>Running These Code:</p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/OsCode.PNG" alt="alt text" /></p>
+<h2 id="2-take-it-apart"><strong>2. Take it APART!</strong></h2>
+<p>Now we must create an empty husk of the former car shown below:</p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/car_empty.PNG" alt="alt text" /></p>
+<h2 id="3-spinning-motors"><strong>3. Spinning Motors</strong></h2>
+<p>Now we test if our motors function properly. I tested both motors at the same time with a power supply then only with a battery using 150 PWM on both. I tested it going forward and then going backwards as shown:</p>
+<p>Power Supply:</p>
+<p><a href="https://youtu.be/NanhYhcpWdQ"><img src="https://markdown-videos-api.jorgenkh.no/youtube/NanhYhcpWdQ" alt="" /></a></p>
+<p>Battery:</p>
+<p><a href="https://youtu.be/4oOiWewazSU"><img src="https://markdown-videos-api.jorgenkh.no/youtube/4oOiWewazSU" alt="" /></a></p>
+<p>Code Used:</p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/Test_motors.PNG" alt="alt text" /></p>
+<h2 id="4-stuff-it-in"><strong>4. Stuff It IN!</strong></h2>
+<p>Now we must stuff all the sensors we've been working on the previous labs inside the car. Now to make sure there wasn't to much wire loose I resoldered shorter connections and used hotglue/double side tape to fit everything in. Here the layout I choose to do:</p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/Top_View.PNG" alt="alt text" /></p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/car_side.PNG" alt="alt text" /></p>
+<h2 id="5-lower-limit-pwm">**5. Lower Limit PWM **</h2>
+<p>Under load it took 60 PWM on both sides to get it moving. Wihtout load it took 40 PWM to get it spinning. To pivot in place I made onen side 70 PWM to go right and the other 70 PWM to go left as shown below:</p>
+<p><a href="https://youtu.be/yudRkV-ePfE"><img src="https://markdown-videos-api.jorgenkh.no/youtube/yudRkV-ePfE" alt="" /></a></p>
+<h2 id="5-calliibration-factor">**5. Calliibration Factor **</h2>
+<p>Both motors sadly don't seem to spin at the same rate. However, they are close and to figure out which was stronger I set them equal and let it run. Whichever side turned the more I made weaker just by a little. My factor was 4/5 and can be seen below. After finding it I tested it by going forward then backwards 2m. It important to note that PWM by default is 8 bits (0-255) when configuring it, but it can be changed as shown in an example demo file.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/cali_fact.PNG" alt="alt text" /></p>
+<p><a href="https://youtu.be/5gWvonIzkD0"><img src="https://markdown-videos-api.jorgenkh.no/youtube/5gWvonIzkD0" alt="" /></a></p>
+<h2 id="5-open-loop">**5. Open Loop **</h2>
+<p>To put my car to the test I made it sping around my water bottle a couple of times:</p>
+<p><a href="https://youtu.be/PihZ3a2_GjA"><img src="https://markdown-videos-api.jorgenkh.no/youtube/PihZ3a2_GjA" alt="" /></a></p>
+<p>Here the code I used:</p>
+<p><img src="https://henrycc24.github.io/Labs/lab4/right_round.PNG" alt="alt text" /></p>
+
           </div>
         </article>
       </div>
@@ -207,7 +248,16 @@
     <div class="columns is-centered">
       <div class="column is-8">
         <nav class="level">
-               
+              
+          <div class="level-item has-text-centered">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab5&#x2F;">
+              <span class="icon mr-2">
+                <i class="fas fa-arrow-circle-left"></i>
+              </span>
+              Lab 5
+            </a>
+          </div>
+           
           <div class="level-item has-text-centered">
             <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab3&#x2F;">
               Lab3<span class="icon ml-2">

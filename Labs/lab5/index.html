@@ -39,7 +39,7 @@
 
   <title>
     
- | Lab3
+ | Lab 5
 
   </title>
 
@@ -127,9 +127,9 @@
       <div class="column is-8 is-offset-2">
         <article class="box">
           <h1 class="title">
-            Lab3
+            Lab 5
           </h1>
-          <p class="subtitle">Third Lab</p>
+          <p class="subtitle">Fourth Lab - Motor Control</p>
           <div class="columns is-multiline is-gapless">
             <div class="column is-8">
               
@@ -151,11 +151,11 @@
   <span class="icon">
     <i class="far fa-clock"></i>
   </span>
-  <span>4 min,</span>
+  <span>0 min,</span>
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>764 words</span>
+  <span>0 words</span>
 </span>
 
             </div>
@@ -167,59 +167,7 @@
             </div>
           </div>
           <div class="content mt-2">
-            <blockquote>
-<p>Lab3: In This lab we add TOF sensors to transmit distances for our car robot while its traveling.</p>
-</blockquote>
-<h2 id="prelab">**Prelab</h2>
-<p>For the prelab, we have to give thought of the place of out ToF sensors. There are several combinations possible, however, I will choose front and back to place my ToF sensors so that it can traverse both forward and reverse knowing if there are any obstacles in the way. However, it will have blind spots at its sides which may cause trouble avodiing obstacles. To use both sensors first, we have to take note of the address of them. Both of them share the address 0x52. This needs to be changed when we run them they don't conflict. To do so one of the sensors we will soder on an extra cable connecting XSHUT to an analog pin on the Artemis. In this case I used A2, and we set the pin LOW in our code then alter the address (I did 0x32), aftewards to use the 2nd one you set the XSHUT high. Allowing both sensors to run at the same time.</p>
-<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>    </span><span style="color:#bf616a;">digitalWrite</span><span>(SHUTDOWN_PIN, LOW);
-</span><span>    distanceSensor1.</span><span style="color:#bf616a;">setI2CAddress</span><span>(ADDRESS); 
-</span><span>    </span><span style="color:#bf616a;">digitalWrite</span><span>(SHUTDOWN_PIN, HIGH); 
-</span></code></pre>
-<p>Wiring Diagram:
-<img src="https://henrycc24.github.io/Labs/lab3/Wiring_diagram.png" alt="alt text" /></p>
-<h1 id="tasks">Tasks</h1>
-<h1 id="lab-3">Lab 3</h1>
-<h2 id="1-tof-and-breakout-board">**1. ToF and Breakout Board **</h2>
-<p>Using the wiring diagram above, we were able to connect the ToF to our breakout board as seen:</p>
-<p><img src="https://henrycc24.github.io/Labs/lab3/battery_con.png" alt="alt text" /></p>
-<p>Noting that like previous lab, we are able to power it up with the battery and connect to it via bluetooth.
-Here how the board was soldered:</p>
-<p><img src="https://henrycc24.github.io/Labs/lab3/bottom_solder.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab3/top_solder.png" alt="alt text" /></p>
-<p><img src="https://henrycc24.github.io/Labs/lab3/connected_ble.png" alt="alt text" /></p>
-<h2 id="2-scanning-the-for-address">**2. Scanning the for Address</h2>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>&gt; file-&gt;Examples-&gt;Apollo3-&gt;Example05_Wire_I2C.ino
-</span></code></pre>
-<p><img src="https://henrycc24.github.io/Labs/lab3/address.png" alt="alt text" /></p>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>We get an address reading of 0x29. At first I was perplexed since it didn&#39;t match 0x52 from the datasheet. However, I realized with the last byte of both 52 = 0101 0010, 29 = 0010 1001 that 0x29 is just 0x52 but shifted to the left. The LSB got removed since this is the read/write bit, meaning we can assign with any address != 29. 
-</span></code></pre>
-<h2 id="3-tof-sensor">**3. TOF Sensor</h2>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>The sensor has 3 modes, short, medium, and long. The larger distance mode you choose, the more it is affected by ambient light. Long has the longets distance of 4 m, however, will only be able to measure 73 cm with strong ambient light. Short doesn&#39;t get affected by ambient light as much, and can do around 136 cm both in the dark and with strong ambient light. Which in our case will prove to be very useufl since we will most liekly driving our guy with ambient light around, rather then the dark. We want the farthest distance we can get with that affecdt, which in this case is short. 
-</span><span>
-</span><span>I&#39;ve decided to test short range:
-</span></code></pre>
-<p><img src="https://henrycc24.github.io/Labs/lab3/short_code.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab3/short_measure.png" alt="alt text" /></p>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Here are the measuremnets of actual vs measured between 400 - 1900 mm: 
-</span></code></pre>
-<p><img src="https://henrycc24.github.io/Labs/lab3/ABS_diff.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab3/ActvsMeas.png" alt="alt text" /></p>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Looking at these graphs once you reach past 1300 mms the data becomes less accurate which is to be expected. Graphing the means using np.mean and mp.std to get standard. The std increased the further we got, showing more noise/variance in measurements. 
-</span></code></pre>
-<h2 id="4-multiple-tof-and-imu">**4. Multiple ToF and IMU</h2>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Setup for 2 ToF by changing address of one of them: 
-</span></code></pre>
-<p><img src="https://henrycc24.github.io/Labs/lab3/loop.png" alt="alt text" /><img src="https://henrycc24.github.io/Labs/lab3/setup.png" alt="alt text" /></p>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Connecting 2 ToF and IMU we collect 2000 sample data points and then send it via bluetooth. These are the results: (Collected parallel as can be seen by X-axis)
-</span></code></pre>
-<p><img src="https://henrycc24.github.io/Labs/lab3/TOF1vsTOF2.png" alt="alt text" />
-<img src="https://henrycc24.github.io/Labs/lab3/acc.png" alt="alt text" /><img src="https://henrycc24.github.io/Labs/lab3/Gyro.png" alt="alt text" /></p>
-<p><a href="https://youtu.be/kcKIogiezIA"><img src="https://markdown-videos-api.jorgenkh.no/youtube/kcKIogiezIA" alt="" /></a></p>
-<p>Key note is that ToF sensors collect less data points over the same period as the acc and gyro. As can be seen on teh graph ToFs collected ~31 points while acc/gyro collected 2000 io the same time. I had to create a seperate array such that when I graph it the distances won't be zerod out since it there were no distances collected for hundreds of time stamps.</p>
-<h2 id="5-limiting-factor">**5. Limiting Factor</h2>
-<p><img src="https://henrycc24.github.io/Labs/lab3/dt_times.png" alt="alt text" />
-<a href="https://youtu.be/X2TuPMtNqvs"><img src="https://markdown-videos-api.jorgenkh.no/youtube/X2TuPMtNqvs" alt="" /></a></p>
-<p>As previousuly mentioned ToF sesnors need time until it can collect data again.  The time it took for a since ToF varied around 6 ms, and the 2nd was longer with 9ms. Which seems extremely small however, relative 2 the other sensors which collect data incredidbly fast it is slow. Which is why when collecing data, i accounted for a seperate time/collection array just so the values didn't bounce to 0. The limiting factor would in this case be 9 ms the longer time to collect data.</p>
-<p><img src="https://henrycc24.github.io/Labs/lab3/dts_.png" alt="alt text" /></p>
-
+            
           </div>
         </article>
       </div>
@@ -259,19 +207,10 @@ Here how the board was soldered:</p>
     <div class="columns is-centered">
       <div class="column is-8">
         <nav class="level">
-              
+               
           <div class="level-item has-text-centered">
             <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab4&#x2F;">
-              <span class="icon mr-2">
-                <i class="fas fa-arrow-circle-left"></i>
-              </span>
-              Lab 4
-            </a>
-          </div>
-           
-          <div class="level-item has-text-centered">
-            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab2&#x2F;">
-              Lab 2<span class="icon ml-2">
+              Lab 4<span class="icon ml-2">
                 <i class="fas fa-arrow-circle-right"></i>
               </span>
             </a>
