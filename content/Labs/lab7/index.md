@@ -76,11 +76,26 @@ I wanted to experiment with different dt values, and to do so I simply tested it
 
 ![alt text](kalman_lower.png)
 
-Running the KF filter with base paramters as before actually gave pretty code results even with a lower dt. Dt directly changes the Ad array, the momentum calcualtion, and sigma values used for these matrixes, hwoever, as long as you configure it right it can accurately display the stead state in the system. The above image is showcasing a dt of .223 which is ~2.4 times slower then the original of .09. 
+Running the KF filter with base paramters as before actually gave pretty code results even with a lower dt. Dt directly changes the Ad array, the momentum calcualtion, and sigma values used for these matrixes, hwoever, as long as you configure it right it can accurately display the steady state in the system. The above image is showcasing a dt of .223 which is ~2.4 times slower then the original of .09. 
 
 
+## **4. Running it on the lil Homie**
+
+Alright now for the true test running it on my robot lil Homie. First of we have to include the linear algebra library and download it doing
+#include <BasicLinearAlgebra.h>
 
 
-Here is a video of it using the P algorithim to stop ~ a 1ft away from the wall. 
+Alright to implement in C took a while however, since it was first coded in python it was just like translating a different language and such we got these following functions/code: 
 
-[![](https://markdown-videos-api.jorgenkh.no/youtube/Y3MIlNEH4Cc)](https://youtu.be/Y3MIlNEH4Cc)
+![alt text](updated_KF.png) ![alt text](Kalman_c.png)
+![alt text](kalman_function.png)
+
+
+Unlke lab5 there is no extroplation being taken place here. Instead how it works is that if the sensor is ready it will provide its current position and feed it into the kalman filter, and then the kalman filter will output its state vector which then again will call our PID function that we implemented last time. In which we have a designeted distance (1ft ~ 300 mm) that we want our robot to be away from. 
+
+![alt text](Robot_kf.png)
+
+Here a graph of it which accurately displays how it ran where it was to close then backed up and once it hits it distance it shut off the PWM. As shown below: 
+
+
+[![](https://markdown-videos-api.jorgenkh.no/youtube/sLueyu8xcOM)](https://youtu.be/sLueyu8xcOM)
