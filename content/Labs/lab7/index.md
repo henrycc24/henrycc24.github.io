@@ -1,7 +1,7 @@
 +++
 title = "Lab 7"
 description = "Kalman Filter"
-date  = 2025-03-24 (Birthday :D)
+date  = 2025-03-24 
 +++
 
 > Lab7 : Kalman Filter Implementation
