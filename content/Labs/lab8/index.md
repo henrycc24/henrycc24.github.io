@@ -64,4 +64,9 @@ Since this trial it kinda hit a chair the leg while reading and end the ToF data
 
 Lastly my last trial probaly my most stable as well with 2.43 seconds clocked in. 
 
+## **C. Bloopers**
 
+[![](https://markdown-videos-api.jorgenkh.no/youtube/Ytn8pNPo4xQ)](https://youtu.be/Ytn8pNPo4xQ)
+
+
+Yeah so I had a lot of failed trials couldn't choose one so made a compilation :D
