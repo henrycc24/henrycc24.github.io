@@ -1,7 +1,7 @@
 +++
 title = "Lab 8"
 description = "Stunts"
-date  = 2025-04-8 
+date  = 2025-04-08 
 +++
 
 > Lab8 : Flipparino 
