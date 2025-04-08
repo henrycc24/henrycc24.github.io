@@ -24,7 +24,7 @@ Here at the begging of my code I made by robot collect some data for a few secon
 
 Having the code was the simple part the most difficult part was making sure the robot had the physical criteria to flip each time I ran it. 
 
-![alt text](kf_code.png) ![alt text](kf_code.png)
+![alt text](pebbles.png) ![alt text](tape_wheels.png)
 
 At first I was testing out drifting and tapped all my wheels in order for there to be less friction created, allowing it to drift easier. However, when I decided to go to flipping instead initally I left the tape on all the wheels. However, this caused issues since the car never was able to create enough momentum in order flip properly. This was due to the front wheels not gaining enough traction to allow for the back wheels to simply flip over even with added weights. To resolve this I simply removed the front wheel tapes, but left the back wheels tape in order for it to be easier for it to flip. With the wheels on the back with tape this meant that it would have less traction and static friction that needed to be overcome to allow it to flip which worked really well for flipping. 
 
@@ -63,3 +63,5 @@ Since this trial it kinda hit a chair the leg while reading and end the ToF data
 [![](https://markdown-videos-api.jorgenkh.no/youtube/q7fE4WizOto)](https://youtu.be/q7fE4WizOto)
 
 Lastly my last trial probaly my most stable as well with 2.43 seconds clocked in. 
+
+
