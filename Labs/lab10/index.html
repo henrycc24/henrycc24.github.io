@@ -39,7 +39,7 @@
 
   <title>
     
- | Lab 8
+ | Lab 10
 
   </title>
 
@@ -127,9 +127,9 @@
       <div class="column is-8 is-offset-2">
         <article class="box">
           <h1 class="title">
-            Lab 8
+            Lab 10
           </h1>
-          <p class="subtitle">Stunts</p>
+          <p class="subtitle">Bayes Filter</p>
           <div class="columns is-multiline is-gapless">
             <div class="column is-8">
               
@@ -141,7 +141,7 @@
   <span class="icon">
     <i class="far fa-calendar-alt"></i>
   </span>
-  <span><time datetime="2025-04-08">April 08, 2025</time></span>
+  <span><time datetime="2025-04-22">April 22, 2025</time></span>
 </span>
 
             </div>
@@ -151,11 +151,11 @@
   <span class="icon">
     <i class="far fa-clock"></i>
   </span>
-  <span>5 min,</span>
+  <span>4 min,</span>
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>837 words</span>
+  <span>640 words</span>
 </span>
 
             </div>
@@ -168,37 +168,31 @@
           </div>
           <div class="content mt-2">
             <blockquote>
-<p>Lab8 : Flipparino</p>
+<p>Lab8 : Bayes Filterization</p>
 </blockquote>
 <h1 id="tasks">Tasks</h1>
-<h1 id="lab-8">Lab 8</h1>
-<h2 id="a-flipparino-code"><strong>A. Flipparino Code</strong></h2>
-<p>The task I decided to do was flipping my robot, little homie, and driving it backwards over where it started. To implement this I simply hardcoded everything. No PID or Klarman filter was used I simply sent my robot forward and then backwards as shown in the code below.</p>
-<p><img src="https://henrycc24.github.io/Labs/lab8/Code.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab8/code2.png" alt="alt text" /></p>
-<p>Here at the begging of my code I made by robot collect some data for a few seconds before operating by making sure the PWM was set at 0. After a few seconds I made it go full throttle to the wall at 255 PWM even though I know the max is around 180 I just maxed it out on both pins just to be safe. In order to actually flip the robot I simply made it go backwards full throttle at 255 PWM as well. At first I had it stop to try to flip it however, it wouldn't just turn off the motor immediately causing it to drift a bit. To stop this issue, I simply removed it stopping instead it transitioned immediately to reverseing which worked out much better as seen by the videos.</p>
-<h2 id="b-flipping-robot-adjustments">**B. Flipping Robot Adjustments **</h2>
-<p>Having the code was the simple part the most difficult part was making sure the robot had the physical criteria to flip each time I ran it.</p>
-<p><img src="https://henrycc24.github.io/Labs/lab8/pebbles.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab8/tape_wheels.png" alt="alt text" /></p>
-<p>At first I was testing out drifting and tapped all my wheels in order for there to be less friction created, allowing it to drift easier. However, when I decided to go to flipping instead initally I left the tape on all the wheels. However, this caused issues since the car never was able to create enough momentum in order flip properly. This was due to the front wheels not gaining enough traction to allow for the back wheels to simply flip over even with added weights. To resolve this I simply removed the front wheel tapes, but left the back wheels tape in order for it to be easier for it to flip. With the wheels on the back with tape this meant that it would have less traction and static friction that needed to be overcome to allow it to flip which worked really well for flipping.</p>
-<p>In addition to this I added weights inside the battery comparment of my robot. The weights I decided to use were 3 pebbles that I found that fit perfectly inside. These 3 pebbles helped anchor the front wheels when it transtions from forawrd to backward allowing it to pivot the back wheels to do a complete 180.</p>
-<p>Lastly, the biggest factor that I found was friction! Throughout testing I saw that my car intially flipped at my first runs but then suddenly seemed to lose all momentum and stayed on the ground. I realized that the front wheels were collecting so much floor dust that it lost all its traction! This meant that it wasn't able to hold its position and flip properly, meaning for every trial ran I wanted to test I manually grabbed a gloth soaked it and cleaned the front wheels to make sure they had enough grip!</p>
-<h2 id="c-data-collection-and-stunts"><strong>C. Data Collection and Stunts</strong></h2>
-<p>All the data was collected while running. Some of the ToF data measured was off a bit since one trial the robot has a bit of a skew when returning pack. The PWM graphs are practically the same since at all times it was running at full throttle just at different pins which are showcased. The robot was started at 100 inches from the wall which can bee seen in all the data collected with its intial ~2661 mm data points at the beginning. Then it flipping at aroun 17 mm, then going fully reverse. Since reverse it was the reamining of the room the total isn't 100% accurate since now the ToF is reading away from the wall and then getting picked up or running into a chair. The sticky pad was use a reference guide to determine where the robot should flip at around 17 mm as mentioned before.</p>
-<h3 id="trial-1">Trial 1</h3>
-<p><img src="https://henrycc24.github.io/Labs/lab8/PWM_v1.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab8/TOF_Video1.png" alt="alt text" /></p>
-<p><a href="https://youtu.be/_5BFLn3FWwc"><img src="https://markdown-videos-api.jorgenkh.no/youtube/_5BFLn3FWwc" alt="" /></a></p>
-<p>This was by far the fastest trial with 2.28 seconds from start to back!</p>
-<h3 id="trial-2">Trial 2</h3>
-<p><img src="https://henrycc24.github.io/Labs/lab8/dist_v2.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab8/pwm_v2.png" alt="alt text" /></p>
-<p><a href="https://youtu.be/QW7ilAi2Zio"><img src="https://markdown-videos-api.jorgenkh.no/youtube/QW7ilAi2Zio" alt="" /></a></p>
-<p>Since this trial it kinda hit a chair the leg while reading and end the ToF data is kinda sparatic as seen by the graph. This one was around 2.4 s</p>
-<h3 id="trial-3">Trial 3</h3>
-<p><img src="https://henrycc24.github.io/Labs/lab8/v3_dist.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab8/V3_pwm.png" alt="alt text" /></p>
-<p><a href="https://youtu.be/q7fE4WizOto"><img src="https://markdown-videos-api.jorgenkh.no/youtube/q7fE4WizOto" alt="" /></a></p>
-<p>Lastly my last trial probaly my most stable as well with 2.43 seconds clocked in.</p>
-<h2 id="c-bloopers"><strong>C. Bloopers</strong></h2>
-<p><a href="https://youtu.be/Ytn8pNPo4xQ"><img src="https://markdown-videos-api.jorgenkh.no/youtube/Ytn8pNPo4xQ" alt="" /></a></p>
-<p>Yeah so I had a lot of failed trials couldn't choose one so made a compilation :D</p>
+<h1 id="lab-10">Lab 10</h1>
+<h2 id="a-compute-control"><strong>A. Compute Control</strong></h2>
+<p>The first function we had to create was compute control. This function takes in 2 inputs of the previous and current odomoetry positions of the robot state. Since in this simulation the roboto state is given as (x, y, theta) it made it easy to to return the control information. Following the formulas provied in lecture, it was easy to calculte the inital rotioatn, translation, and final rotation. Keeping in mind that odometry is used after the robot itself moved making it useful for us in this lab for localizaiton, and recontructing the motion between 2 robot states.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab10/compute_control.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab10/odemetry_model.png" alt="alt text" /></p>
+<h2 id="b-odom-motion-model">**B. Odom Motion Model **</h2>
+<p><img src="https://henrycc24.github.io/Labs/lab10/odom_motion_model.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab10/odemetry.png" alt="alt text" /></p>
+<p>The next function we created was to see the probabilty of our current position given our prev position and the control read up by the odometer. We calculate what we ideally should've done for control using our previous function and the inputs of prev_pose and cur_pose. Then we compare this to what the odometer read since the odometer does have some noise. Getting the probailty of the ideal motion done vs what was given by multiplying each parameter's probility using gaussian. Giving us our transition probabilituy used for our predition step for our prior belief calculation. The probabilty that our robot is in state x given the previous state and control u. p(x | x' u)</p>
+<h2 id="c-prediction-step"><strong>C. Prediction Step</strong></h2>
+<p><img src="https://henrycc24.github.io/Labs/lab10/prediction_step.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab10/transition.png" alt="alt text" /></p>
+<p>Next, we computed the previous belief by calucalting the  prediction step. Since we already set up a function to get the probailty of transition, all we had to do is multiply this probility with the belief of the previous state. However since we have around 2000 states to iterate to calculate a belief, we included a threshold as the lab suggested to ignore and probilites less then .0001 since they didn't contribute much to our beliefs. However we did have to normalize it at the end to make sure it still all added up to 1.</p>
+<h2 id="d-sensor-model"><strong>D. Sensor Model</strong></h2>
+<p><img src="https://henrycc24.github.io/Labs/lab10/sensor_model.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab10/meas.png" alt="alt text" />
+Next in order to calculate the update step we need to find the measurement probabilty p(z |x). This essentially is how measurments are generated based on the robots state. To do this simply we found the probabilty using a gaussian distrubtion with the true observations, collected observations, and standard deviation of sensor noise.</p>
+<h2 id="e-update-step"><strong>E. Update Step</strong></h2>
+<p><img src="https://henrycc24.github.io/Labs/lab10/update_step.png" alt="alt text" /></p>
+<p>Finally with sensor model we just needed to calculate the update step portion to get the belief. To do this we multiplied our measuremnt probability with our prior belief similary as our last functino we have do to it about 2000 times. However, no summation is needed allowing us to use simpler code. Getting our observed sensor reading and then getting the proabilitiy with our snsor model function, we multiplity it with our prior belief to get us our beliefs. As showcased in the formula below.</p>
+<h3 id="bayes-filter">Bayes Filter</h3>
+<p>After finishing the update step now we have all the components in order to use bayes filter which fundamental algorithm for estimating a robot’s state (location) under uncertainty by continually predicting where it might have gone and then correcting with whatever measurements it actually observes. The odometer as can be seen in the video and images below is very noisy/innacurate (red) however, despite that bayes filter is able to overcome it and give a pretty decent estimation on the robot's state (blue) which closely followed the true path green.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab10/bayes_filter.png" alt="alt text" />
+<img src="https://henrycc24.github.io/Labs/lab10/first_bay.png" alt="alt text" /></p>
+<p><a href="https://youtu.be/7UI62tEr8Tc"><img src="https://markdown-videos-api.jorgenkh.no/youtube/7UI62tEr8Tc" alt="" /></a></p>
+<p>some key factors that helped out is that we knew the intial state of our robot for this simulation, we could calculate our inital belief which is required for the algorithim to work intially.</p>
 
           </div>
         </article>
@@ -241,22 +235,14 @@
         <nav class="level">
               
           <div class="level-item has-text-centered">
-            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab7&#x2F;">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab8&#x2F;">
               <span class="icon mr-2">
                 <i class="fas fa-arrow-circle-left"></i>
               </span>
-              Lab 7
+              Lab 8
             </a>
           </div>
            
-          <div class="level-item has-text-centered">
-            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab10&#x2F;">
-              Lab 10<span class="icon ml-2">
-                <i class="fas fa-arrow-circle-right"></i>
-              </span>
-            </a>
-          </div>
-          
         </nav>
       </div>
     </div>
