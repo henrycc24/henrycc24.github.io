@@ -10,7 +10,7 @@ date  = 2025-05-14
 
 The final lab in which we have to naviagite throghout the waypoints in as fast and accurate manner as possible. Here the image of the bath that we had to follow through. Starting from the bottom left and naviagting in a loop and ending at the center of the map.  
 
-This lab I worked with Jorge Corpa and used his car for the video since it was more efficient since both of us were using the same method. Instead of us each wasting time, we colloborated. 
+This lab I worked with Jorge Corpa and used his car for the video since my car orientation didn't work as smoothly as Jorge's. Jorge's orientation was much better then mine, and was mucuh easier to work with and debug. Sadlt I couldn't get Lil Homie working with the orientation and gave up. 
 
 
 # Lab 12
