@@ -134,7 +134,7 @@ In terms of consistency, it will be able to go around the track again however, i
 
 ## **C. Farewell and Resources**
 
-![alt text](robot_crew.png)
+![alt text](robot_squad.png)
 
 
 
