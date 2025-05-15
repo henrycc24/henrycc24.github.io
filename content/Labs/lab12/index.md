@@ -130,7 +130,7 @@ You would think this would be streamline to do however, it is not. It took sever
 
 In terms of consistency, it will be able to go around the track again however, it won't always be as accurate as the run posted. As mentioned before it is a luck based systems at times it felt wether or not it was going to reach the marks. However, when it did it was very accurate it made our days. There no audio sadly in the video due to the fact a lot of crashing out was occuring throguhout this lab.
 
-## **C. Farwell and Resources**
+## **C. Farewell and Resources**
 
 ![alt text](prediction_step.png)
 
