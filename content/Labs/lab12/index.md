@@ -60,7 +60,7 @@ void forward( float t ){
   analogWrite(16, 120);
 
   // while loop to meet timing requirement 
-  while (( millis - init ) < t ) {};
+  while (( millis() - init ) < t ) {};
 
   // STOP THE CAR
   analogWrite(1, 0);
@@ -132,7 +132,7 @@ In terms of consistency, it will be able to go around the track again however, i
 
 ## **C. Farewell and Resources**
 
-![alt text](prediction_step.png)
+![alt text](robot_crew.png)
 
 
 
