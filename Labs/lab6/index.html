@@ -155,7 +155,7 @@
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>1297 words</span>
+  <span>1295 words</span>
 </span>
 
             </div>
@@ -185,7 +185,7 @@
 </span></code></pre>
 <h2 id="pid-control">PID Control **</h2>
 <p>Similar to the previous lab, we used that code as a baseline. With PID, P being proprtional for the present state of the robot which can be calculated simply from calculating the error (target - current angle), I being the integral which acounts for steady state error produced (past). Lastly the D term which is the deferential term that accomadtes from when PI overshoots by multipling the rate of change in error with the constant kd.</p>
-<p><a href="https://youtu.be/i1Tq-JVp6ws"><img src="https://markdown-videos-api.jorgenkh.no/youtube/i1Tq-JVp6ws" alt="" /></a></p>
+<p><a href="https://youtu.be/NL7RcyJQBTY"><img src="https://markdown-videos-api.jorgenkh.no/youtube/NL7RcyJQBTY" alt="" /></a></p>
 <p>As you can see the car is able to oriente itself to its set target angle (90) each time even though offsetting it with my foot. In this implemenation I only used Kp (no kd or ki) since it was more straight forward and easier to use. However, in my code I do have terms for ki and kd if I decide to use them in future labs in order to get a more precise (faster) orientation. Even though I didn't work with the ingtegral and derative terms, working on other projects with PID there are some considerations if I wanted to use them for future labs. For example the integral term will continosuly increase (drift like the gyroscope) and needs to be clamped out from going to an extremely high value if left running. Furtheromre the d term can be impacted a lot by noise, which discussed in lecture can be mitigated by providng a low pass filter thoruhg it which isn't to bad to code as seen by previous labs. This noise is impactful since d is suppose accomadte for PI, and with high frequencies can greatly affect its stability and control behavior. The kp value I selected was based off last lab and the PWM value I used for this lab. In order for the robot not to spin out, I choose a small PWM value of 110. From this PWM value iI was able to select what kp term by simply adjusting from the a small value of .25, and steadily increasing it until it worked around the kp value of 3 as mentioned from lecture to do. I clamped the PWM value to be 110 since this was the minimum amouunt required for it to rotate around. Meaning if the PWM calculated from the PID was less then 110 then it would ramp up to it.</p>
 <p><img src="https://henrycc24.github.io/Labs/lab6/yaw_g.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab6/P_graph.png" alt="alt text" />
 <img src="https://henrycc24.github.io/Labs/lab6/PWM.png" alt="alt text" /></p>
