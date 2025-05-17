@@ -39,7 +39,7 @@
 
   <title>
     
- | Lab 10
+ | Lab 6
 
   </title>
 
@@ -127,9 +127,9 @@
       <div class="column is-8 is-offset-2">
         <article class="box">
           <h1 class="title">
-            Lab 10
+            Lab 6
           </h1>
-          <p class="subtitle">Bayes Filter</p>
+          <p class="subtitle">Mapping</p>
           <div class="columns is-multiline is-gapless">
             <div class="column is-8">
               
@@ -141,7 +141,7 @@
   <span class="icon">
     <i class="far fa-calendar-alt"></i>
   </span>
-  <span><time datetime="2025-04-22">April 22, 2025</time></span>
+  <span><time datetime="2025-04-24">April 24, 2025</time></span>
 </span>
 
             </div>
@@ -151,11 +151,11 @@
   <span class="icon">
     <i class="far fa-clock"></i>
   </span>
-  <span>4 min,</span>
+  <span>5 min,</span>
   <span class="icon">
     <i class="fas fa-pencil-alt"></i>
   </span>
-  <span>640 words</span>
+  <span>811 words</span>
 </span>
 
             </div>
@@ -168,31 +168,30 @@
           </div>
           <div class="content mt-2">
             <blockquote>
-<p>Lab8 : Bayes Filterization</p>
+<p>Lab 9 : Mapping</p>
 </blockquote>
 <h1 id="tasks">Tasks</h1>
-<h1 id="lab-10">Lab 10</h1>
-<h2 id="a-compute-control"><strong>A. Compute Control</strong></h2>
-<p>The first function we had to create was compute control. This function takes in 2 inputs of the previous and current odomoetry positions of the robot state. Since in this simulation the roboto state is given as (x, y, theta) it made it easy to to return the control information. Following the formulas provied in lecture, it was easy to calculte the inital rotioatn, translation, and final rotation. Keeping in mind that odometry is used after the robot itself moved making it useful for us in this lab for localizaiton, and recontructing the motion between 2 robot states.</p>
-<p><img src="https://henrycc24.github.io/Labs/lab10/compute_control.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab10/odemetry_model.png" alt="alt text" /></p>
-<h2 id="b-odom-motion-model">**B. Odom Motion Model **</h2>
-<p><img src="https://henrycc24.github.io/Labs/lab10/odom_motion_model.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab10/odemetry.png" alt="alt text" /></p>
-<p>The next function we created was to see the probabilty of our current position given our prev position and the control read up by the odometer. We calculate what we ideally should've done for control using our previous function and the inputs of prev_pose and cur_pose. Then we compare this to what the odometer read since the odometer does have some noise. Getting the probailty of the ideal motion done vs what was given by multiplying each parameter's probility using gaussian. Giving us our transition probabilituy used for our predition step for our prior belief calculation. The probabilty that our robot is in state x given the previous state and control u. p(x | x' u)</p>
-<h2 id="c-prediction-step"><strong>C. Prediction Step</strong></h2>
-<p><img src="https://henrycc24.github.io/Labs/lab10/prediction_step.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab10/transition.png" alt="alt text" /></p>
-<p>Next, we computed the previous belief by calucalting the  prediction step. Since we already set up a function to get the probailty of transition, all we had to do is multiply this probility with the belief of the previous state. However since we have around 2000 states to iterate to calculate a belief, we included a threshold as the lab suggested to ignore and probilites less then .0001 since they didn't contribute much to our beliefs. However we did have to normalize it at the end to make sure it still all added up to 1.</p>
-<h2 id="d-sensor-model"><strong>D. Sensor Model</strong></h2>
-<p><img src="https://henrycc24.github.io/Labs/lab10/sensor_model.png" alt="alt text" /> <img src="https://henrycc24.github.io/Labs/lab10/meas.png" alt="alt text" />
-Next in order to calculate the update step we need to find the measurement probabilty p(z |x). This essentially is how measurments are generated based on the robots state. To do this simply we found the probabilty using a gaussian distrubtion with the true observations, collected observations, and standard deviation of sensor noise.</p>
-<h2 id="e-update-step"><strong>E. Update Step</strong></h2>
-<p><img src="https://henrycc24.github.io/Labs/lab10/update_step.png" alt="alt text" /></p>
-<p>Finally with sensor model we just needed to calculate the update step portion to get the belief. To do this we multiplied our measuremnt probability with our prior belief similary as our last functino we have do to it about 2000 times. However, no summation is needed allowing us to use simpler code. Getting our observed sensor reading and then getting the proabilitiy with our snsor model function, we multiplity it with our prior belief to get us our beliefs. As showcased in the formula below.</p>
-<h3 id="bayes-filter">Bayes Filter</h3>
-<p>After finishing the update step now we have all the components in order to use bayes filter which fundamental algorithm for estimating a robot’s state (location) under uncertainty by continually predicting where it might have gone and then correcting with whatever measurements it actually observes. The odometer as can be seen in the video and images below is very noisy/innacurate (red) however, despite that bayes filter is able to overcome it and give a pretty decent estimation on the robot's state (blue) which closely followed the true path green.</p>
-<p><img src="https://henrycc24.github.io/Labs/lab10/bayes_filter.png" alt="alt text" />
-<img src="https://henrycc24.github.io/Labs/lab10/first_bay.png" alt="alt text" /></p>
-<p><a href="https://youtu.be/7UI62tEr8Tc"><img src="https://markdown-videos-api.jorgenkh.no/youtube/7UI62tEr8Tc" alt="" /></a></p>
-<p>some key factors that helped out is that we knew the intial state of our robot for this simulation, we could calculate our inital belief which is required for the algorithim to work intially.</p>
+<h1 id="lab-9">Lab 9</h1>
+<h2 id="prelab">PRELAB **</h2>
+<p>The purpose of this lab is to map a static room using our robot. The design of this lab is to place our robots at set locations and make it able to map its environemnt by using our orientation control from lab 6 to spin it around its axis. While it spins around at each angle that we set it to it should collect a distances to the wall. In this lab I dieced to to PID control using the code we implemented in lab 6. Using our knowledge of transformation matrixes in order to plot our readings and draw them on our map. Keep in mind the transformation matrix is made from rotaiton matrix + translation + scaling matrix however we won't be using the scaling matrix in this lab.</p>
+<h2 id="pid-control">PID Control **</h2>
+<p>Similar to lab 6 we will be able to assign our robot certain angles for it in order to rotate the desired amount of times. Even though the lab asks us to rotate for 14 distinct degrees, I decided to use 15 since this was easier to do caculations for in our code since each turn would only be 24 degrees. While doing this lab, an error would occur</p>
+<p><a href="https://youtu.be/8aZ7CtghQYc"><img src="https://markdown-videos-api.jorgenkh.no/youtube/8aZ7CtghQYc" alt="" /></a></p>
+<p>Here a video of the car mapping out a hallway on the third floor of Rhodes. Due to the fact that I worked after office hours, I was unable to get my mapping configuration working in time to actual map out the lab. However, I was able to get a good mapping at one of the intersection corners of rhodes hall.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab9/avg.png" alt="alt text" />  <img src="https://henrycc24.github.io/Labs/lab9/orie.png" alt="alt text" /></p>
+<p>This is the code that I used that performed a for loop to get all 15 increments in degrees that angle gets added +24 each run. Each angle is then plugged into our PID control fucntion that we created in lab 6 called pivot() in this case. Using the PID from lab 6 measn that we mitiage any drift and error casued from the gyroscope when calcuting degree orientation since I used DMP. The only other issue that occured sometimes was false ToF reading where it would be off by a few mm. To account for that as per the lab we took the avg of 5 ToF reading per increment and appended that to the array that we returned. One of the ToF was pointing downwards, however, it data wasn't necessary to complete this lab but it data was still plotted as can be seen in the 4 polar graphs.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab9/p1.png" alt="alt text" />  <img src="https://henrycc24.github.io/Labs/lab9/p2.png" alt="alt text" />
+<img src="https://henrycc24.github.io/Labs/lab9/p3.png" alt="alt text" />  <img src="https://henrycc24.github.io/Labs/lab9/p4.png" alt="alt text" /></p>
+<p>An important factor in getting the car to spin accruately was something I learned from lab 8 was tape the wheels to create less friction so PID had better control. As well as that this time we don't want to wipe our wheels off the dust that gets accumlated. However, at times the car would drift in place and shift either verticallly/horitontally however it was very minor.</p>
+<p>To perform the transformation matrix I based my code from the example provided from transforms.offset_copy. As shown below I applied it to my code chagning it up to as follows:</p>
+<p>As you can see the rotation and translation matrix is known, all we had to do is convert from our polar coordinates into cartesian. Simplyt doing x = rcos(theta) and y = r*sin(theta). Then afterwards we converted these local cordiantes into global coordiantes. Then afterwrads we had to convert the distances from mm to feet, by dividing it by 304.8. Once all these calculations were down the homogenous tranformation was able to keep us the recontructored map as follows. The X's represent the 4 locations I placed the robot in order to map it approprieatly.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab9/map.png" alt="alt text" /></p>
+<p>Filling out the boundires for this map, we get the following final lined up map as shown below. This is pretty accurate to the hallway in rhodes hall even though there is a slight overlap at the bottom left. This is most liekly just based off the reference of where the robot is and, most likely if I skewed it to the left more it wouldl more line up to appear as the corner as it is iin real life.</p>
+<p><img src="https://henrycc24.github.io/Labs/lab9/line_map.png" alt="alt text" />
+<img src="https://henrycc24.github.io/Labs/lab9/points.png" alt="alt text" /></p>
+<p>Here are the coordiantes for each of the lines that were drawn out for the hallway. It is fairly accurate as mentioned before, however there are pointsn where the hallways extend out further. Which likely is from the sensor maxing out since it can't read that far for data. Which is why I didn't highlight those points, because the robot is interpreting them as fall walls.</p>
+<h2 id="references">References **</h2>
+<p>In this lab I got aided by Sana, Lulu, and Jennie</p>
 
           </div>
         </article>
@@ -235,17 +234,17 @@ Next in order to calculate the update step we need to find the measurement proba
         <nav class="level">
               
           <div class="level-item has-text-centered">
-            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab8&#x2F;">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab10&#x2F;">
               <span class="icon mr-2">
                 <i class="fas fa-arrow-circle-left"></i>
               </span>
-              Lab 8
+              Lab 10
             </a>
           </div>
            
           <div class="level-item has-text-centered">
-            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab9&#x2F;">
-              Lab 6<span class="icon ml-2">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;henrycc24.github.io&#x2F;Labs&#x2F;lab12&#x2F;">
+              Lab 12<span class="icon ml-2">
                 <i class="fas fa-arrow-circle-right"></i>
               </span>
             </a>
